@@ -1,7 +1,20 @@
 from address_book import AddressBook, Record
+from vievs import ConsoleView, UserInterface
 import pickle
 
 DATA_FILE = "addressbook.pkl"
+
+COMMANDS = (
+    "hello",
+    "add [name] [phone]",
+    "change [name] [old_phone] [new_phone]",
+    "phone [name]",
+    "add-birthday [name] [DD.MM.YYYY]",
+    "show-birthday [name]",
+    "birthdays",
+    "all",
+    "close / exit",
+)
 
 def input_error(func):
     def wrapper(*args, **kwargs):
@@ -135,23 +148,14 @@ def load_data():
 
 # Main function that runs the interactive bot loop
 def main():
+
+    view = ConsoleView()
     # Initialize the address book
     book = load_data()
 
     # Display welcome message and available commands
-    print("Welcome to the assistant bot!")
-    print(
-        "Commands:\n"
-        "hello\n"
-        "add [name] [phone]\n"
-        "change [name] [old_phone] [new_phone]\n"
-        "phone [name]\n"
-        "add-birthday [name] [DD.MM.YYYY]\n"
-        "show-birthday [name]\n"
-        "birthdays\n"
-        "all\n"
-        "close / exit"
-    )
+    view.show_message("Welcome to the assistant bot!")
+    view.show_message(COMMANDS)
 
     # Main event loop for processing user commands
     while True:
@@ -166,53 +170,53 @@ def main():
         # Handle exit commands
         if command in ("close", "exit"):
             save_data(book)
-            print("Good bye!")
+            view.show_message("Good bye!")
             break
 
         # Greet the user
         elif command == "hello":
-            print("How can I help you?")
+            view.show_message("How can I help you?")
 
         # Add a new contact with phone number
         elif command == "add":
             try:
-                print(add_contact(args, book))
+                view.show_message(add_contact(args, book))
             except ValueError as error:
-                print(error)
+                view.show_message(error)
 
         # Change existing phone number for a contact
         elif command == "change":
             try:
-                print(change_contact(args, book))
+                view.show_message(change_contact(args, book))
             except ValueError as error:
-                print(error)
+                view.show_message(error)
 
         # Display phone numbers for a contact
         elif command == "phone":
-            print(show_phone(args, book))
+            view.show_message(show_phone(args, book))
 
         # Add birthday to a contact
         elif command == "add-birthday":
             try:
-                print(add_birthday(args, book))
+                view.show_message(add_birthday(args, book))
             except (TypeError, ValueError) as error:
-                print(error)
+                view.show_message(error)
 
         # Show birthday for a specific contact
         elif command == "show-birthday":
-            print(show_birthday(args, book))
+            view.show_message(show_birthday(args, book))
 
         # Show upcoming birthdays for the next 7 days
         elif command == "birthdays":
-            print(show_birthdays(args, book))
+            view.show_message(show_birthdays(args, book))
 
         # Display all contacts
         elif command == "all":
-            print(show_all(book))
+            view.show_message(show_all(book))
 
         # Handle invalid commands
         else:
-            print("Invalid command.")
+            view.show_message("Invalid command.")
 
 
 if __name__ == "__main__":
