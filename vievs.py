@@ -8,7 +8,7 @@ if TYPE_CHECKING:
 class UserInterface(ABC):
 
     @abstractmethod
-    def show_messsage(self, message: str) -> None:
+    def show_message(self, message: str) -> None:
         pass
 
     @abstractmethod
@@ -22,7 +22,7 @@ class UserInterface(ABC):
 class ContactCardFormater:
 
     @staticmethod
-    def format_contact(record: Record) -> str:
+    def format_contact(record: "Record") -> str:
         phones ="; ".join(phone.value for phone in record.phones) or "not set"
         birthday = record.birthday.value if record.birthday else "not set"
 

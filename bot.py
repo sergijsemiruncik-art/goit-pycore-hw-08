@@ -139,8 +139,8 @@ def load_data():
         if isinstance(deserialized_data, AddressBook):
             return deserialized_data
 
-            print("Data file contains invalid data. Starting with an empty address book.")
-            return AddressBook()
+        print("Data file contains invalid data. Starting with an empty address book.")
+        return AddressBook()
 
     except (FileNotFoundError, EOFError, pickle.UnpicklingError):
         print("No existing data file found. Starting with an empty address book.")
@@ -155,7 +155,7 @@ def main():
 
     # Display welcome message and available commands
     view.show_message("Welcome to the assistant bot!")
-    view.show_message(COMMANDS)
+    view.show_commands(COMMANDS)
 
     # Main event loop for processing user commands
     while True:
@@ -164,7 +164,7 @@ def main():
         try:
             command, args = parse_input(user_input)
         except ValueError:
-            print("Please enter a command.")
+            view.show_message("Please enter a command.")
             continue
 
         # Handle exit commands
@@ -212,7 +212,7 @@ def main():
 
         # Display all contacts
         elif command == "all":
-            view.show_message(show_all(book))
+            view.show_contacts(book.data.values())
 
         # Handle invalid commands
         else:
