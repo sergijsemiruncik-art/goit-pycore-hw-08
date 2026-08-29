@@ -44,7 +44,7 @@ class ConsoleView(UserInterface):
         print(message)
 
     def show_contacts(self, contacts: Iterable["Record"]) -> None:
-        cards = [self._formatter.format(contact) for contact in contacts]
+        cards = [self._formatter.format_contact(contact) for contact in contacts]
 
         if not cards:
             self.show_message("No contacts")
