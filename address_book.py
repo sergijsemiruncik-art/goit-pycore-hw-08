@@ -1,5 +1,6 @@
 from collections import UserDict
 from datetime import datetime, date, timedelta
+
 # Base class for all contact field types
 class Field:
     def __init__(self, value):

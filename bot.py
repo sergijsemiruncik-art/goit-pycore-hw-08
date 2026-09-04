@@ -1,5 +1,5 @@
 from address_book import AddressBook, Record
-from vievs import ConsoleView, UserInterface
+from vievs import ConsoleView
 import pickle
 
 DATA_FILE = "addressbook.pkl"
